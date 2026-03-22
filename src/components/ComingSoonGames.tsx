@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 
 interface GameCard {
   name: string;
@@ -84,13 +83,9 @@ export default function ComingSoonGames() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {GAMES.map((game, i) => (
-          <motion.div
+          <div
             key={game.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.07 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-            className="relative rounded-xl p-4 cursor-pointer select-none"
+            className="anim-fade-up relative rounded-xl p-4 cursor-pointer select-none"
             style={{
               background: game.bgGradient,
               border: `1px solid ${game.borderColor}`,
@@ -111,13 +106,7 @@ export default function ComingSoonGames() {
             </div>
 
             {/* Icon */}
-            <motion.div
-              className="text-3xl mb-2"
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, delay: i * 0.5 }}
-            >
-              {game.icon}
-            </motion.div>
+            <div className="anim-wobble text-3xl mb-2">{game.icon}</div>
 
             {/* Name */}
             <div
@@ -139,16 +128,13 @@ export default function ComingSoonGames() {
                 cursor: 'not-allowed',
               }}
             />
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Bottom teaser */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="mt-4 text-center py-3 rounded-xl"
+      <div
+        className="anim-fade-in anim-delay-3 mt-4 text-center py-3 rounded-xl"
         style={{
           background: 'rgba(124, 58, 237, 0.05)',
           border: '1px dashed rgba(124, 58, 237, 0.2)',
@@ -157,7 +143,7 @@ export default function ComingSoonGames() {
         <p className="text-slate-500 text-sm">
           🔔 <span className="text-slate-400">Follow us for launch announcements</span>
         </p>
-      </motion.div>
+      </div>
     </div>
   );
 }

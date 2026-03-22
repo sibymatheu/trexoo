@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { TICKET_PRICE_SOL } from '../constants';
-import { motion, AnimatePresence } from 'framer-motion';
 
 type Tab = 'how' | 'terms' | 'privacy';
 
@@ -16,11 +15,7 @@ export default function InfoPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
-      >
+      <div className="anim-fade-down text-center mb-8">
         <h1
           className="text-3xl font-black mb-2"
           style={{
@@ -33,7 +28,7 @@ export default function InfoPage() {
           Information
         </h1>
         <p className="text-slate-400 text-sm">Everything you need to know about trexoo.fun</p>
-      </motion.div>
+      </div>
 
       {/* Tab navigation */}
       <div
@@ -67,24 +62,18 @@ export default function InfoPage() {
       </div>
 
       {/* Tab content */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-          className="rounded-2xl p-6"
-          style={{
-            background: 'linear-gradient(135deg, #0d0d1a 0%, #0a0a15 100%)',
-            border: '1px solid rgba(124, 58, 237, 0.15)',
-          }}
-        >
-          {activeTab === 'how' && <HowItWorks />}
-          {activeTab === 'terms' && <Terms />}
-          {activeTab === 'privacy' && <Privacy />}
-        </motion.div>
-      </AnimatePresence>
+      <div
+        key={activeTab}
+        className="anim-fade-up rounded-2xl p-6"
+        style={{
+          background: 'linear-gradient(135deg, #0d0d1a 0%, #0a0a15 100%)',
+          border: '1px solid rgba(124, 58, 237, 0.15)',
+        }}
+      >
+        {activeTab === 'how' && <HowItWorks />}
+        {activeTab === 'terms' && <Terms />}
+        {activeTab === 'privacy' && <Privacy />}
+      </div>
     </div>
   );
 }

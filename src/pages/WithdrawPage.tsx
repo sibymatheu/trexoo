@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { useLotteryProgram } from '../hooks/useLotteryProgram';
 import { formatLamports } from '../utils/format';
@@ -41,11 +40,7 @@ export default function WithdrawPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
       {/* Page header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
-      >
+      <div className="anim-fade-down text-center mb-8">
         <div className="text-4xl mb-3">💸</div>
         <h1
           className="text-3xl font-black mb-2"
@@ -61,14 +56,12 @@ export default function WithdrawPage() {
         <p className="text-slate-400 text-sm">
           Withdraw your prize balance to your connected wallet
         </p>
-      </motion.div>
+      </div>
 
       {/* Not connected state */}
       {!isConnected && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="rounded-xl p-8 text-center"
+        <div
+          className="anim-fade-in rounded-xl p-8 text-center"
           style={{
             background: 'linear-gradient(135deg, #0d0d1a 0%, #0a0a15 100%)',
             border: '1px solid rgba(124, 58, 237, 0.2)',
@@ -79,17 +72,13 @@ export default function WithdrawPage() {
           <p className="text-slate-400 text-sm">
             Please connect your Phantom wallet to view and withdraw your winnings.
           </p>
-        </motion.div>
+        </div>
       )}
 
       {isConnected && (
         <div className="space-y-4">
           {/* Balance overview cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-3 gap-3"
-          >
+          <div className="anim-fade-up grid grid-cols-3 gap-3">
             <div
               className="rounded-xl p-4 text-center"
               style={{
@@ -98,12 +87,7 @@ export default function WithdrawPage() {
               }}
             >
               <div className="text-xs text-slate-400 mb-1 uppercase tracking-wide">Available</div>
-              <div
-                className="text-xl font-black"
-                style={{ color: '#FFD700' }}
-              >
-                {balanceSol.toFixed(4)}
-              </div>
+              <div className="text-xl font-black" style={{ color: '#FFD700' }}>{balanceSol.toFixed(4)}</div>
               <div className="text-xs text-slate-500">SOL</div>
             </div>
 
@@ -115,9 +99,7 @@ export default function WithdrawPage() {
               }}
             >
               <div className="text-xs text-slate-400 mb-1 uppercase tracking-wide">Total Won</div>
-              <div className="text-xl font-black text-emerald-400">
-                {totalWonSol.toFixed(4)}
-              </div>
+              <div className="text-xl font-black text-emerald-400">{totalWonSol.toFixed(4)}</div>
               <div className="text-xs text-slate-500">SOL</div>
             </div>
 
@@ -129,57 +111,42 @@ export default function WithdrawPage() {
               }}
             >
               <div className="text-xs text-slate-400 mb-1 uppercase tracking-wide">Withdrawn</div>
-              <div className="text-xl font-black text-purple-400">
-                {totalWithdrawnSol.toFixed(4)}
-              </div>
+              <div className="text-xl font-black text-purple-400">{totalWithdrawnSol.toFixed(4)}</div>
               <div className="text-xs text-slate-500">SOL</div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Notifications */}
-          <AnimatePresence>
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="px-4 py-3 rounded-xl flex items-center justify-between"
-                style={{
-                  background: 'rgba(239, 68, 68, 0.1)',
-                  border: '1px solid rgba(239, 68, 68, 0.3)',
-                  color: '#fca5a5',
-                }}
-              >
-                <span className="text-sm">{error}</span>
-                <button onClick={() => setError(null)} className="text-red-400 hover:text-red-200 ml-3 text-lg">✕</button>
-              </motion.div>
-            )}
+          {error && (
+            <div
+              className="anim-fade-down px-4 py-3 rounded-xl flex items-center justify-between"
+              style={{
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                color: '#fca5a5',
+              }}
+            >
+              <span className="text-sm">{error}</span>
+              <button onClick={() => setError(null)} className="text-red-400 hover:text-red-200 ml-3 text-lg">✕</button>
+            </div>
+          )}
 
-            {txSuccess && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="px-4 py-3 rounded-xl"
-                style={{
-                  background: 'rgba(16, 185, 129, 0.1)',
-                  border: '1px solid rgba(16, 185, 129, 0.3)',
-                  color: '#6ee7b7',
-                }}
-              >
-                <span className="text-sm">
-                  ✅ Withdrawal successful! SOL has been sent to your wallet.
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {txSuccess && (
+            <div
+              className="anim-fade-down px-4 py-3 rounded-xl"
+              style={{
+                background: 'rgba(16, 185, 129, 0.1)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                color: '#6ee7b7',
+              }}
+            >
+              <span className="text-sm">✅ Withdrawal successful! SOL has been sent to your wallet.</span>
+            </div>
+          )}
 
           {/* Withdraw form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="rounded-xl p-6"
+          <div
+            className="anim-fade-up anim-delay-1 rounded-xl p-6"
             style={{
               background: 'linear-gradient(135deg, #0d0d1a 0%, #0a0a15 100%)',
               border: '1px solid rgba(124, 58, 237, 0.2)',
@@ -197,9 +164,7 @@ export default function WithdrawPage() {
               >
                 <div className="text-3xl mb-2">💰</div>
                 <p className="text-slate-400 text-sm">No winnings available to withdraw.</p>
-                <p className="text-slate-500 text-xs mt-1">
-                  Participate in a round to win SOL prizes!
-                </p>
+                <p className="text-slate-500 text-xs mt-1">Participate in a round to win SOL prizes!</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -274,12 +239,10 @@ export default function WithdrawPage() {
                 </div>
 
                 {/* Withdraw button */}
-                <motion.button
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
+                <button
                   onClick={handleWithdraw}
                   disabled={txLoading || !amount || parseFloat(amount) <= 0}
-                  className="w-full py-4 rounded-xl text-base font-bold transition-all"
+                  className="w-full py-4 rounded-xl text-base font-bold transition-all active:scale-[0.99]"
                   style={{
                     background: txLoading || !amount || parseFloat(amount) <= 0
                       ? 'rgba(255, 215, 0, 0.2)'
@@ -299,17 +262,14 @@ export default function WithdrawPage() {
                   ) : (
                     `Withdraw ${amount ? parseFloat(amount).toFixed(4) : '0.0000'} SOL`
                   )}
-                </motion.button>
+                </button>
               </div>
             )}
-          </motion.div>
+          </div>
 
           {/* Info box */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="rounded-xl p-4"
+          <div
+            className="anim-fade-in anim-delay-3 rounded-xl p-4"
             style={{
               background: 'rgba(124, 58, 237, 0.05)',
               border: '1px solid rgba(124, 58, 237, 0.12)',
@@ -331,7 +291,7 @@ export default function WithdrawPage() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
         </div>
       )}
     </div>

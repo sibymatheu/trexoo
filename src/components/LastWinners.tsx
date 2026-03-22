@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { formatAddress, formatLamports, timeAgo } from '../utils/format';
 import type { HistoricalRound } from '../hooks/useLotteryProgram';
 
@@ -25,12 +24,9 @@ export default function LastWinners({ rounds }: LastWinnersProps) {
 
       <div className="space-y-3">
         {rounds.map((round, roundIdx) => (
-          <motion.div
+          <div
             key={round.roundNumber}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: roundIdx * 0.1 }}
-            className="rounded-xl overflow-hidden"
+            className="anim-fade-up rounded-xl overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, #0d0d1a 0%, #0a0a15 100%)',
               border: '1px solid rgba(124, 58, 237, 0.15)',
@@ -87,12 +83,7 @@ export default function LastWinners({ rounds }: LastWinnersProps) {
                     {round.winners.map((winner, wIdx) => {
                       const config = TIER_CONFIG[winner.tier];
                       return (
-                        <motion.tr
-                          key={wIdx}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: roundIdx * 0.1 + wIdx * 0.04 }}
-                        >
+                        <tr key={wIdx}>
                           <td className="py-1.5 pr-2">
                             <span
                               className="inline-flex items-center gap-1 text-xs font-bold px-1.5 py-0.5 rounded"
@@ -115,14 +106,14 @@ export default function LastWinners({ rounds }: LastWinnersProps) {
                               +{formatLamports(winner.prize)} SOL
                             </span>
                           </td>
-                        </motion.tr>
+                        </tr>
                       );
                     })}
                   </tbody>
                 </table>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

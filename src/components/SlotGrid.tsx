@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { formatAddress } from '../utils/format';
 import type { RoundData } from '../hooks/useLotteryProgram';
 import { TICKET_PRICE_SOL } from '../constants';
@@ -55,13 +54,9 @@ export default function SlotGrid({
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {slots.map(({ index, participant, isOccupied, isCurrentUser, isWinner, winnerTier }) => (
-          <motion.div
+          <div
             key={index}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.05 }}
-            whileHover={!isOccupied && canBuy ? { scale: 1.04, y: -2 } : {}}
-            className={`relative rounded-xl p-3 flex flex-col items-center justify-center min-h-[110px] cursor-${!isOccupied && canBuy ? 'pointer' : 'default'} transition-all duration-200 ${
+            className={`anim-fade-in relative rounded-xl p-3 flex flex-col items-center justify-center min-h-[110px] cursor-${!isOccupied && canBuy ? 'pointer' : 'default'} transition-all duration-200 ${
               isCurrentUser ? 'slot-card-yours' :
               isOccupied ? 'slot-card-locked' :
               'slot-card-available'
@@ -132,17 +127,15 @@ export default function SlotGrid({
                 {/* Available slot */}
                 {canBuy && !txLoading ? (
                   <>
-                    <motion.div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-xl mb-2"
+                    <div
+                      className="anim-scale-pulse w-10 h-10 rounded-full flex items-center justify-center text-xl mb-2"
                       style={{
                         background: 'rgba(16, 185, 129, 0.15)',
                         border: '1px solid rgba(16, 185, 129, 0.4)',
                       }}
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
                     >
                       ➕
-                    </motion.div>
+                    </div>
                     <div className="text-xs font-semibold" style={{ color: '#10b981' }}>
                       Available
                     </div>
@@ -171,18 +164,16 @@ export default function SlotGrid({
                 )}
               </>
             )}
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Buy ticket CTA */}
       {canBuy && (
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+        <button
           onClick={onBuyTicket}
           disabled={txLoading}
-          className="w-full mt-4 py-3.5 px-6 rounded-xl font-bold text-base transition-all"
+          className="anim-fade-up w-full mt-4 py-3.5 px-6 rounded-xl font-bold text-base transition-all"
           style={{
             background: txLoading
               ? 'rgba(124, 58, 237, 0.3)'
@@ -201,7 +192,7 @@ export default function SlotGrid({
           ) : (
             `🎰 Buy Ticket — ${TICKET_PRICE_SOL} SOL`
           )}
-        </motion.button>
+        </button>
       )}
 
       {!isConnected && (
