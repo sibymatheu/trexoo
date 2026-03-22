@@ -56,7 +56,7 @@ export default function LotteryPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-slate-400 text-base sm:text-lg"
+          className="text-slate-400 text-base sm:text-sm"
         >
           10 slots · 7 winners · {TICKET_PRICE_SOL} SOL per ticket · Provably
           fair

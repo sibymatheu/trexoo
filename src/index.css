@@ -55,6 +55,7 @@ body {
   background-color: var(--casino-bg);
   color: #e2e8f0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
   min-height: 100vh;
 }
 
