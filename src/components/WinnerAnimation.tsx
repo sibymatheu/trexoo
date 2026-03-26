@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import { formatAddress, formatLamports } from '../utils/format';
 import type { RoundData } from '../hooks/useLotteryProgram';
 
 interface WinnerAnimationProps {
   round: RoundData;
+  userWallet?: string | null;
 }
 
-export default function WinnerAnimation({ round }: WinnerAnimationProps) {
+export default function WinnerAnimation({ round, userWallet }: WinnerAnimationProps) {
   const [phase, setPhase] = useState<'spinning' | 'revealing' | 'done'>('spinning');
   const [highlightedSlot, setHighlightedSlot] = useState<number>(-1);
   const [revealedCount, setRevealedCount] = useState(0);
   const [showAnimation, setShowAnimation] = useState(false);
+
+  const isUserWinner = userWallet
+    ? round.winningParticipants.includes(userWallet)
+    : false;
 
   useEffect(() => {
     if (round.status !== 'Settled' || round.winningParticipants.length === 0) {
@@ -202,15 +208,32 @@ export default function WinnerAnimation({ round }: WinnerAnimationProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mt-4 text-center py-3 rounded-xl"
-              style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.2)',
+              onAnimationComplete={() => {
+                if (isUserWinner) {
+                  confetti({ particleCount: 200, spread: 80, origin: { y: 0.5 }, colors: ['#FFD700', '#FFA500', '#7C3AED', '#10b981'] });
+                } else {
+                  confetti({ particleCount: 80, spread: 60, origin: { y: 0.5 } });
+                }
               }}
             >
-              <p className="text-emerald-400 text-sm font-medium">
-                Winners can claim prizes on the Withdraw page
-              </p>
+              {isUserWinner && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="mb-3 py-3 rounded-xl text-center"
+                  style={{ background: 'rgba(255,215,0,0.15)', border: '1px solid rgba(255,215,0,0.4)' }}
+                >
+                  <p className="text-yellow-300 font-black text-lg">🏆 You won! Claim your prize below</p>
+                </motion.div>
+              )}
+              <div
+                className="mt-2 text-center py-3 rounded-xl"
+                style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)' }}
+              >
+                <p className="text-emerald-400 text-sm font-medium">
+                  Winners can claim prizes on the Withdraw page
+                </p>
+              </div>
             </motion.div>
           )}
         </div>

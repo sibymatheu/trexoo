@@ -19,7 +19,7 @@ export default function InfoPage() {
         <h1
           className="text-3xl font-black mb-2"
           style={{
-            fontFamily: "'Cinzel Decorative', Georgia, serif",
+            fontFamily: "var(--font-family)",
             background: 'linear-gradient(135deg, #FFD700, #FFA500)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',

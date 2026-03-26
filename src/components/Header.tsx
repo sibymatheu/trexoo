@@ -43,9 +43,9 @@ export default function Header() {
   }
 
   const navLinks = [
-    { path: "/", label: "Play" },
-    { path: "/withdraw", label: "Withdraw" },
-    { path: "/info", label: "Info" },
+    { path: "/", label: "PLAY" },
+    { path: "/withdraw", label: "WITHDRAW" },
+    { path: "/info", label: "INFO" },
   ];
 
   return (
@@ -105,7 +105,7 @@ export default function Header() {
               <span
                 className="text-2xl font-bold tracking-wide"
                 style={{
-                  fontFamily: "'Cinzel Decorative', Georgia, serif",
+                  fontFamily: "var(--font-family)",
                   background: "linear-gradient(135deg, #FFD700, #FFA500)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -135,8 +135,8 @@ export default function Header() {
                 }`}
                 style={
                   location.pathname === link.path
-                    ? { boxShadow: "0 0 10px rgba(124, 58, 237, 0.3)" }
-                    : {}
+                    ? { boxShadow: "0 0 10px rgba(124, 58, 237, 0.3)", fontFamily: "var(--font-family)" }
+                    : { fontFamily: "var(--font-family)" }
                 }
               >
                 {link.label}
@@ -388,6 +388,7 @@ export default function Header() {
                   ? "bg-purple-900/50 text-yellow-400"
                   : "text-slate-400 hover:text-white"
               }`}
+              style={{ fontFamily: "var(--font-family)" }}
             >
               {link.label}
             </Link>
