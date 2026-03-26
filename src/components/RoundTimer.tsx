@@ -45,6 +45,7 @@ export default function RoundTimer({ round }: RoundTimerProps) {
   };
 
   const colors = statusColors[round.status];
+
   const filledPercent = (round.slotsFilled / round.slots) * 100;
 
   return (
